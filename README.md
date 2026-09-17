@@ -1,3 +1,4 @@
+[README.md](https://github.com/user-attachments/files/32358559/README.md)
 # Módulo 3 — Inmunización de una Cartera de Renta Fija con Swaps de Tasa
 
 ## Descripción
@@ -10,9 +11,9 @@ Proyecto de gestión de activos y pasivos (ALM) que diseña una cartera de bonos
 
 ## Relevancia profesional
 
-- Demuestra manejo práctico de ALM con derivados, habilidad central en mesas de tesorería y áreas de riesgo financiero
+- Manejo práctico de ALM con derivados, habilidad central en mesas de tesorería y áreas de riesgo financiero
 - Vincula la curva de tasas calibrada en el módulo anterior con una aplicación concreta de cobertura
-- Muestra comprensión del pricing de swaps plain vanilla mediante DCF
+- Comprensión del pricing de swaps plain vanilla mediante DCF
 - Evidencia uso de datos de mercado reales (SOFR via Derivative Logic) en lugar de tasas sintéticas
 
 ---
@@ -20,34 +21,19 @@ Proyecto de gestión de activos y pasivos (ALM) que diseña una cartera de bonos
 ## Herramientas
 
 | Herramienta | Uso |
-|---|---|
 | Python | Valuación del swap, cálculo de duraciones, stress test |
 | Excel | Dashboard de inmunización, Solver, gráfico del stress test |
 
-**Librerías Python:** `numpy`, `pandas`
+**Librerías Python:** numpy, pandas
 
 ---
 
 ## Datos utilizados
 
 | Dataset | Fuente | Uso |
-|---|---|---|
 | Curva spot de bonos argentinos | Proyecto Módulo 2 (Nelson-Siegel) | Duración de los bonos de la cartera |
 | Tasas SOFR a 1, 2 y 3 años (16/09/2026) | Derivative Logic | Curva de descuento del swap |
 | Bonos AL29 y AE38 | Mercado secundario ARG | Activos de la cartera |
-
----
-
-## Estructura del proyecto
-
-```
-modulo3-inmunizacion-swap/
-│
-├── Inmunizacion_con_Swap.ipynb   # Notebook principal (Fases 1 a 5)
-├── Inmunizacion_con_Swap.xlsx    # Dashboard Excel (Fases 1 a 5 + gráfico stress test)
-├── df_stress.csv                 # Output del stress test exportado desde Python
-└── README.md
-```
 
 ---
 
@@ -67,11 +53,10 @@ El pasivo zero-coupon tiene Duración Macaulay = T, lo que simplifica el anális
 Se seleccionan dos bonos soberanos del Módulo 2 cuyas duraciones modificadas "rodean" la duración del pasivo:
 
 | Bono | D. Modificada | Peso |
-|---|---|---|
 | AL29 | 1.456 | 40% |
 | AE38 | 4.330 | 60% |
-| **Cartera** | **3.181** | — |
-| **Pasivo** | **2.804** | — |
+| **Cartera** | 3.181 |
+| **Pasivo** | 2.804 |
 
 Gap inicial: +0.377 → la cartera es más larga que el pasivo → se requiere un **payer swap** (pagar fijo, recibir flotante) para acortar duración.
 
@@ -81,20 +66,13 @@ Gap inicial: +0.377 → la cartera es más larga que el pasivo → se requiere u
 
 Swap plain vanilla valuado como diferencia entre un bono fijo y un bono flotante:
 
-```
 V_swap = B_fijo − B_flotante
-```
 
 La **par rate** se calcula como la tasa fija que hace V_swap = 0 al inicio del contrato:
 
-```
-par_rate = (1 − d_n) / Σ d_i
-```
-
-Donde `d_i` son los factores de descuento derivados de la curva SOFR.
+par_rate = (1 − FD_n) / sum (FD_i)
 
 | Parámetro | Valor |
-|---|---|
 | Curva spot (1Y / 2Y / 3Y) | 4.273% / 4.392% / 4.410% |
 | Par rate (tasa fija) | 4.407% |
 | D. Modificada del swap | 2.754 |
@@ -105,14 +83,11 @@ Donde `d_i` son los factores de descuento derivados de la curva SOFR.
 
 El nocional del swap se despeja de la ecuación de inmunización de primer orden:
 
-```
 D_cartera · VP_A + D_swap · N_swap = D_pasivo · VP_L
 
 N_swap = (D_pasivo · VP_L − D_cartera · VP_A) / D_swap
-```
 
 | Resultado | Valor |
-|---|---|
 | Nocional del swap | USD −134.100 |
 | D. cartera post-swap | 2.8037 |
 | D. pasivo | 2.8037 |
