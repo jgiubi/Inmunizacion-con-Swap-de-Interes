@@ -1,4 +1,3 @@
-[README.md](https://github.com/user-attachments/files/32358559/README.md)
 # Módulo 3 — Inmunización de una Cartera de Renta Fija con Swaps de Tasa
 
 ## Descripción
